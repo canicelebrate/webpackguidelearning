@@ -8,9 +8,15 @@ module.exports = {
      app: './src/index.js',
      print: './src/print.js'
    },
+  devtool: 'inline-source-map',
+  devServer: {
+     contentBase: './dist',
+	 port:8088
+   },
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
+	publicPath:'/'
   },
   plugins:[
   	new CleanWebpackPlugin(['dist']),
