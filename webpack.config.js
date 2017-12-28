@@ -1,48 +1,22 @@
 const path = require('path');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-
-const extractCSS = new ExtractTextPlugin({
-    filename:  (getPath) => {
-      return getPath('css/styles.css');
-    },
-    allChunks: true
-  });
+const HtmlWebpackPlugin = require('html-webpack-plugin'); 
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
 
 module.exports = {
-  entry: './src/index.js',
+   entry: {
+     app: './src/index.js',
+     print: './src/print.js'
+   },
   output: {
-    filename: 'js/bundle.js',
+    filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist')
   },
-  module:{
-	rules:[
-		{
-			test:/\.css$/,
-			use:extractCSS.extract({
-				fallback:"style-loader",
-				use:"css-loader",
-				publicPath :"../"
-			})
-		},
-		{
-			test:/\.(png|jpg|gif)$/,
-			use:[{
-					loader:'file-loader',
-					options: {
-					  name: '[hash].[ext]',
-						outputPath: 'images/'
-					}  
-				}]
-		},
-		{
-         test: /\.xml$/,
-         use: [
-           'xml-loader'
-         ]
-       }
-	]
-  },
   plugins:[
-	extractCSS
+  	new CleanWebpackPlugin(['dist']),
+	new HtmlWebpackPlugin({
+		title: 'Output Management'
+	}),
+	new ManifestPlugin()
   ]
 };
