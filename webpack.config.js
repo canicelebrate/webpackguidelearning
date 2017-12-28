@@ -3,15 +3,25 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 
+const webpack = require('webpack');
+
 module.exports = {
    entry: {
      app: './src/index.js',
-     print: './src/print.js'
+   },
+  module: {
+     rules: [
+       {
+         test: /\.css$/,
+         use: ['style-loader', 'css-loader']
+       }
+     ]
    },
   devtool: 'inline-source-map',
   devServer: {
      contentBase: './dist',
-	 port:8088
+	 port:8088,
+	 hot:true
    },
   output: {
     filename: '[name].bundle.js',
@@ -21,8 +31,10 @@ module.exports = {
   plugins:[
   	new CleanWebpackPlugin(['dist']),
 	new HtmlWebpackPlugin({
-		title: 'Output Management'
+		title: 'Hot Module Replacement'
 	}),
-	new ManifestPlugin()
+	new ManifestPlugin(),
+	new webpack.NamedModulesPlugin(),
+	new webpack.HotModuleReplacementPlugin()
   ]
 };
