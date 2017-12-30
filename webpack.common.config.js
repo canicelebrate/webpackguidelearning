@@ -8,6 +8,7 @@ const webpack = require('webpack');
 module.exports = {
    entry: {
      app: './src/index.js',
+	 another:'./src/another-module.js'
    },
   module: {
      rules: [
@@ -28,6 +29,9 @@ module.exports = {
 		title: 'Production'
 	}),
 	new ManifestPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+       name: 'common' // Specify the common bundle's name.
+     })
 
   ]
 };
