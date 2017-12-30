@@ -1,6 +1,4 @@
-import {cube} from './math.js';
 import './style.css';
-import _ from 'lodash';
 
  if (process.env.NODE_ENV !== 'production') {
    console.log('Looks like we are in development mode!');
@@ -9,13 +7,19 @@ import _ from 'lodash';
    console.log('Looks like we are in production mode!');
  }
 
-function component() {
-    var element = document.createElement('pre');
+ function getComponent() {
+   return import(/* webpackChunkName: "lodash" */ 'lodash').then(_ => {
+     var element = document.createElement('div');
 
-	var text = _.join(['Hello webpack code splitting!', 'module', 'loaded!', '5 cubed is equal to '  + cube(5)], ' ');
-	
-   element.innerHTML = text;
-  return element;
-}
+     element.innerHTML = _.join(['Hello', 'webpack','code','splitting','dynamic','imports'], ' ');
 
-document.body.appendChild(component());
+     return element;
+
+   }).catch(error => 'An error occurred while loading the component');
+ }
+ 
+ getComponent().then(component=>{
+	 document.body.appendChild(component);
+ });
+ 
+

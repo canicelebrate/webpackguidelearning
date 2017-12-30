@@ -7,8 +7,7 @@ const webpack = require('webpack');
 
 module.exports = {
    entry: {
-     app: './src/index.js',
-	 another:'./src/another-module.js'
+     app: './src/index.js'
    },
   module: {
      rules: [
@@ -21,12 +20,13 @@ module.exports = {
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
-	publicPath:'/'
+	publicPath:'/',
+	chunkFilename: '[name].bundle.js',
   },
   plugins:[
   	new CleanWebpackPlugin(['dist']),
 	new HtmlWebpackPlugin({
-		title: 'Production'
+		title: 'Code splitting - Dynamic Imports'
 	}),
 	new ManifestPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
