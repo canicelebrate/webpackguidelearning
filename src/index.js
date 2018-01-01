@@ -1,6 +1,7 @@
 import './style.css';
 import _ from 'lodash';
 
+
  if (process.env.NODE_ENV !== 'production') {
    console.log('Looks like we are in development mode!');
  }
@@ -18,18 +19,18 @@ import _ from 'lodash';
 	 var button = document.createElement('button');
      var br = document.createElement('br');
 
-     button.innerHTML = 'Click me and look at the console!';
+     button.innerHTML = 'Click me and look at the console2!';
      element.appendChild(br);
      element.appendChild(button);
 
    
      // Note that because a network request is involved, some indication
      // of loading would need to be shown in a production-level site/app.
-     button.onclick = e => import(/* webpackChunkName: "print" */ './print').then(module => {
-     var print = module.default;
+	button.onclick = e => import(/* webpackChunkName: "print" */ './print').then(module => {
+	 var print = module.default;
 
-     print();
-   });
+	 print();
+	});
 
 
      return element;

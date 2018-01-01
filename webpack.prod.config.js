@@ -12,6 +12,13 @@ module.exports = merge(common,{
 	}),
 	new webpack.DefinePlugin({
        'process.env.NODE_ENV': JSON.stringify('production')
+     }),
+	new webpack.HashedModuleIdsPlugin(),
+	new webpack.optimize.CommonsChunkPlugin({
+       name: 'vendor' // Specify the vendor bundle's name.
+     }),
+    new webpack.optimize.CommonsChunkPlugin({
+       name: 'manifest' // Specify the manifest bundle's name.
      })
   ]
 });

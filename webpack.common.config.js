@@ -7,7 +7,8 @@ const webpack = require('webpack');
 
 module.exports = {
    entry: {
-     app: './src/index.js'
+     app: './src/index.js',
+	 vendor:['lodash'],
    },
   module: {
      rules: [
@@ -18,20 +19,17 @@ module.exports = {
      ]
    },
   output: {
-    filename: '[name].bundle.js',
+    filename: '[name].[chunkhash].js',
     path: path.resolve(__dirname, 'dist'),
 	publicPath:'/',
-	chunkFilename: '[name].bundle.js',
+	chunkFilename: '[id].chunk_[chunkhash].js'
   },
   plugins:[
   	new CleanWebpackPlugin(['dist']),
 	new HtmlWebpackPlugin({
-		title: 'Code splitting - Dynamic Imports'
+		title: 'Caching'
 	}),
-	new ManifestPlugin(),
-    new webpack.optimize.CommonsChunkPlugin({
-       name: 'common' // Specify the common bundle's name.
-     })
+	new ManifestPlugin()
 
   ]
 };
